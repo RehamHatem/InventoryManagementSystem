@@ -55,7 +55,7 @@ export default function Index({ suppliers }: { suppliers: PaginatedSuppliers }) 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="bg-white p-8 rounded-xl shadow-sm"
+                className=" p-8 "
             >
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6">
@@ -84,14 +84,14 @@ export default function Index({ suppliers }: { suppliers: PaginatedSuppliers }) 
                     placeholder="Search by name or email..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full mb-6 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="w-full mb-6 px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
 
                 {/* Table */}
                 <motion.div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
+                    <table className="w-full border bg-white rounded-xl shadow-md">
                         <thead>
-                            <tr className="bg-gray-100 text-left text-gray-700">
+                            <tr className="bg-gray-200 text-left border text-gray-700">
                                 <th className="px-4 py-3 border-b">Name</th>
                                 <th className="px-4 py-3 border-b">Email</th>
                                 <th className="px-4 py-3 border-b">Phone</th>

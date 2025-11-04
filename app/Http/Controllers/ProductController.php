@@ -15,9 +15,11 @@ class ProductController extends Controller
         $products = Product::with('supplier')
             ->orderBy('name')
             ->paginate(10);
+            
 
         return Inertia::render('Products/Index', [
             'products' => $products,
+            'suppliers' => Supplier::select('id', 'name')->get(),
         ]);
     }
 
