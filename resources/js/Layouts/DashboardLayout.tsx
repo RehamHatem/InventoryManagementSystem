@@ -9,8 +9,8 @@ import {
     User,
     Boxes,
     ArrowLeftRight,
-    OrigamiIcon,
-    StrikethroughIcon,
+    ChartBar,
+    Warehouse,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -54,7 +54,9 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                             <SidebarLink href="/suppliers" icon={<Users />} label="Suppliers" />
                         )}
                         <SidebarLink href="/stock" icon={<ArrowLeftRight />} label="Stock Movements" />
-                        <SidebarLink href="/stockmanagement" icon={<StrikethroughIcon />} label="Stock Management" />
+                        <SidebarLink href="/stockmanagement" icon={<Warehouse />} label="Stock Management" />
+                        <SidebarLink href="/reports" icon={<ChartBar />} label="Reports" />
+
                     </nav>
                 </div>
 

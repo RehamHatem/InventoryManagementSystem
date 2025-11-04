@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StockManagementController;
 use App\Http\Controllers\StockTransactionController;
 use App\Http\Controllers\SupplierController;
@@ -69,6 +70,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
        Route::get('stockmanagement/transactions', [StockManagementController::class, 'allTransactions'])
     ->name('stock.transactions');
+Route::get('/reports', [ReportController::class, 'index'])
+    ->name('reports.index');
 
 
 });
