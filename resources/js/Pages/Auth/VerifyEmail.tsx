@@ -13,7 +13,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout auth={null}>
             <Head title="Email Verification" />
 
             <div className="w-full max-w-md bg-white p-10 rounded-lg shadow-md">

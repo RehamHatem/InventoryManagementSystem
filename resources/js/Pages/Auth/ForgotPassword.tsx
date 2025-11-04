@@ -5,7 +5,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 import { Mail } from "lucide-react";
 
-export default function ForgotPassword({ status }: { status?: string }) {
+export default function ForgotPassword({ status ,auth}: { status?: string , auth: any }) {
     const { data, setData, post, processing, errors } = useForm({
         email: "",
     });
@@ -16,7 +16,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout auth={auth}>
             <Head title="Forgot Password" />
 
             <div className="w-full max-w-md bg-white p-10 rounded-lg shadow-md">

@@ -5,9 +5,10 @@ import InputLabel from "@/Components/InputLabel";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Boxes } from "lucide-react";
+import Navbar from "@/Components/navbar";
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status, canResetPassword ,auth}: { status?: string; canResetPassword: boolean , auth: any}) {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: "",
     password: "",
@@ -24,28 +25,17 @@ export default function Login({ status, canResetPassword }) {
   };
 
   return (
-    <GuestLayout>
+    <GuestLayout auth={auth}>
       <Head title="Login" />
+
+
 
       <div className="w-full max-w-md bg-white p-10 rounded-lg shadow-md">
 
         {/* Icon */}
         <div className="flex justify-center mb-6">
           <div className="w-14 h-14 rounded-lg bg-blue-100 flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-blue-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 7h16M4 7l2-3h12l2 3M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7"
-              />
-            </svg>
+            <Boxes className="h-14 w-14 text-blue-600" />
           </div>
         </div>
 

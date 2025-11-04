@@ -9,9 +9,11 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 export default function ResetPassword({
     token,
     email,
+    auth,
 }: {
     token: string;
     email: string;
+    auth: any;
 }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         token: token,
@@ -32,7 +34,7 @@ export default function ResetPassword({
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout auth={auth}>
             <Head title="Reset Password" />
 
             <div className="w-full max-w-md bg-white p-10 rounded-lg shadow-md">
