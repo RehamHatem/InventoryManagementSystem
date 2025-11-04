@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StockManagementController;
 use App\Http\Controllers\StockTransactionController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,9 +21,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -72,6 +74,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ->name('stock.transactions');
 Route::get('/reports', [ReportController::class, 'index'])
     ->name('reports.index');
+
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::put('/users/{user}/role', [UserController::class, 'updateRole'])
+    ->name('users.updateRole');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
 
 
 });
