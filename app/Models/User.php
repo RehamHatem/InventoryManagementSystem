@@ -23,6 +23,11 @@ class User extends Authenticatable
         'password',
         'role',
     ];
+    public function stockTransactions()
+{
+    return $this->hasMany(StockTransaction::class);
+}
+
 
     /**
      * The attributes that should be hidden for serialization.
