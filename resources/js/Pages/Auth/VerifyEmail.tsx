@@ -1,51 +1,71 @@
-import PrimaryButton from '@/Components/PrimaryButton';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import PrimaryButton from "@/Components/PrimaryButton";
+import GuestLayout from "@/Layouts/GuestLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
+import { MailCheck } from "lucide-react";
 
 export default function VerifyEmail({ status }: { status?: string }) {
     const { post, processing } = useForm({});
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        post(route('verification.send'));
+        post(route("verification.send"));
     };
 
     return (
         <GuestLayout>
             <Head title="Email Verification" />
 
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Thanks for signing up! Before getting started, could you verify
-                your email address by clicking on the link we just emailed to
-                you? If you didn't receive the email, we will gladly send you
-                another.
-            </div>
+            <div className="w-full max-w-md bg-white p-10 rounded-lg shadow-md">
 
-            {status === 'verification-link-sent' && (
-                <div className="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                {/* Header Icon */}
+                <div className="flex justify-center mb-6">
+                    <div className="w-14 h-14 rounded-lg bg-blue-100 flex items-center justify-center">
+                        <MailCheck className="h-8 w-8 text-blue-600" />
+                    </div>
                 </div>
-            )}
 
-            <form onSubmit={submit}>
-                <div className="mt-4 flex items-center justify-between">
-                    <PrimaryButton disabled={processing}>
-                        Resend Verification Email
-                    </PrimaryButton>
+                {/* Title */}
+                <h2 className="text-2xl font-semibold text-center text-gray-900">
+                    Verify Your Email
+                </h2>
 
+                {/* Subtitle */}
+                <p className="text-center text-gray-500 mb-6 mt-2">
+                    Before continuing, please check your email for a verification link.
+                    If you didn’t receive the email, we can send another.
+                </p>
+
+                {/* Notification */}
+                {status === "verification-link-sent" && (
+                    <div className="mb-4 rounded-md bg-green-100 px-4 py-2 text-sm text-green-700">
+                        A new verification link has been sent to your email address.
+                    </div>
+                )}
+
+                {/* Actions */}
+                <form onSubmit={submit} className="space-y-5">
+
+                    {/* Resend Button */}
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold"
+                    >
+                        {processing ? "Sending..." : "Resend Verification Email"}
+                    </button>
+
+                    {/* Logout */}
                     <Link
-                        href={route('logout')}
+                        href={route("logout")}
                         method="post"
                         as="button"
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                        className="mt-2 w-full text-center text-gray-600 hover:underline text-sm"
                     >
                         Log Out
                     </Link>
-                </div>
-            </form>
+                </form>
+            </div>
         </GuestLayout>
     );
 }

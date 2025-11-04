@@ -4,10 +4,14 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
-import { User, Mail, Lock } from "lucide-react";
+import { FormEventHandler, useState } from "react";
+import { User, Mail, Lock ,Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
+  const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
   const { data, setData, post, processing, errors, reset } = useForm({
     name: "",
     email: "",
@@ -26,131 +30,192 @@ export default function Register() {
     <GuestLayout>
       <Head title="Register" />
 
-      <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white/80 p-8 shadow-2xl backdrop-blur-md dark:bg-gray-800/80">
-        <h2 className="mb-2 text-center text-3xl font-bold text-gray-800 dark:text-gray-100">
-          Create Your Account ✨
+      <div className="w-full max-w-md bg-white p-10 rounded-lg shadow-md">
+        {/* Icon */}
+        <div className="flex justify-center mb-6">
+          <div className="w-14 h-14 rounded-lg bg-blue-100 flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8 text-blue-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 7h16M4 7l2-3h12l2 3M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* Title */}
+        <h2 className="text-2xl font-semibold text-center text-gray-900">
+          Create Account
         </h2>
-        <p className="mb-6 text-center text-gray-500 dark:text-gray-400">
-          Join us and start your journey today
+        <p className="text-center text-gray-500 mb-6">
+          Join us and start your journey
         </p>
 
-        <form onSubmit={submit} className="space-y-6">
+        {/* Form */}
+        <form onSubmit={submit} className="space-y-5">
           {/* Name */}
           <div>
-            <InputLabel
-              htmlFor="name"
-              value="Full Name"
-              className="text-gray-700 dark:text-gray-300"
-            />
+            <InputLabel htmlFor="name" value="Full Name" />
+
             <div className="relative mt-2">
-              <User className="absolute left-3 top-2.5 size-5 text-gray-400 dark:text-gray-500" />
+              <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+
               <TextInput
                 id="name"
                 name="name"
                 value={data.name}
-                className="w-full rounded-lg border border-gray-300 bg-gray-50 pl-10 pr-3 py-2 text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100"
+                placeholder="Enter your full name"
+                className="pl-10 block w-full border border-gray-300 bg-white py-3 px-4 rounded-md 
+                           placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
                 autoComplete="name"
-                isFocused
+                isFocused={true}
                 onChange={(e) => setData("name", e.target.value)}
                 required
               />
             </div>
+
             <InputError message={errors.name} className="mt-1" />
           </div>
 
           {/* Email */}
           <div>
-            <InputLabel
-              htmlFor="email"
-              value="Email Address"
-              className="text-gray-700 dark:text-gray-300"
-            />
+            <InputLabel htmlFor="email" value="Email Address" />
+
             <div className="relative mt-2">
-              <Mail className="absolute left-3 top-2.5 size-5 text-gray-400 dark:text-gray-500" />
+              <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+
               <TextInput
                 id="email"
                 type="email"
                 name="email"
                 value={data.email}
-                className="w-full rounded-lg border border-gray-300 bg-gray-50 pl-10 pr-3 py-2 text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100"
+                placeholder="Enter your email address"
+                className="pl-10 block w-full border border-gray-300 bg-white py-3 px-4 rounded-md 
+                           placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
                 autoComplete="username"
                 onChange={(e) => setData("email", e.target.value)}
                 required
               />
             </div>
+
             <InputError message={errors.email} className="mt-1" />
           </div>
 
           {/* Password */}
           <div>
-            <InputLabel
-              htmlFor="password"
-              value="Password"
-              className="text-gray-700 dark:text-gray-300"
-            />
+            <InputLabel htmlFor="password" value="Password" />
+
             <div className="relative mt-2">
-              <Lock className="absolute left-3 top-2.5 size-5 text-gray-400 dark:text-gray-500" />
+              <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+
               <TextInput
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={data.password}
-                className="w-full rounded-lg border border-gray-300 bg-gray-50 pl-10 pr-3 py-2 text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100"
-                autoComplete="new-password"
+                placeholder="Create a password"
+                className="pl-10 pr-10 block w-full border border-gray-300 bg-white py-3 px-4 rounded-md 
+                 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
                 onChange={(e) => setData("password", e.target.value)}
                 required
               />
+
+              {/* Eye icon */}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3 text-gray-500"
+              >
+                {showPassword ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path d="M3 3l18 18" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path d="M2.458 12C3.732 7.943 7.523 5 
+                   12 5c4.477 0 8.268 2.943 
+                   9.542 7-1.274 4.057-5.065 7-9.542 
+                   7-4.477 0-8.268-2.943-9.542-7z"/>
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                )}
+              </button>
             </div>
+
             <InputError message={errors.password} className="mt-1" />
           </div>
 
           {/* Confirm Password */}
           <div>
-            <InputLabel
-              htmlFor="password_confirmation"
-              value="Confirm Password"
-              className="text-gray-700 dark:text-gray-300"
-            />
+            <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+
             <div className="relative mt-2">
-              <Lock className="absolute left-3 top-2.5 size-5 text-gray-400 dark:text-gray-500" />
+              <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+
               <TextInput
                 id="password_confirmation"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 name="password_confirmation"
                 value={data.password_confirmation}
-                className="w-full rounded-lg border border-gray-300 bg-gray-50 pl-10 pr-3 py-2 text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100"
-                autoComplete="new-password"
-                onChange={(e) =>
-                  setData("password_confirmation", e.target.value)
-                }
+                placeholder="Confirm your password"
+                className="pl-10 pr-10 block w-full border border-gray-300 bg-white py-3 px-4 rounded-md 
+                 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+                onChange={(e) => setData("password_confirmation", e.target.value)}
                 required
               />
+
+              {/* Eye icon */}
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-3 text-gray-500"
+              >
+                {showConfirmPassword ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path d="M3 3l18 18" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path d="M2.458 12C3.732 7.943 7.523 5 
+                   12 5c4.477 0 8.268 2.943 
+                   9.542 7-1.274 4.057-5.065 7-9.542 
+                   7-4.477 0-8.268-2.943-9.542-7z"/>
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                )}
+              </button>
             </div>
-            <InputError
-              message={errors.password_confirmation}
-              className="mt-1"
-            />
+
+            <InputError message={errors.password_confirmation} className="mt-1" />
           </div>
 
-          {/* Submit Button */}
-          <div className="pt-2">
-            <PrimaryButton
-              className="group relative w-full justify-center overflow-hidden rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-indigo-500"
-              disabled={processing}
-            >
-              <span className="relative z-10">
-                {processing ? "Registering..." : "Register"}
-              </span>
-            </PrimaryButton>
-          </div>
+
+          {/* Button */}
+          <button
+            type="submit"
+            disabled={processing}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold"
+          >
+            {processing ? "Registering..." : "Register"}
+          </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+        {/* Footer */}
+        <p className="mt-6 text-center text-sm text-gray-500">
           Already have an account?{" "}
-          <Link
-            href={route("login")}
-            className="font-semibold text-indigo-600 hover:underline dark:text-indigo-400"
-          >
+          <Link href={route("login")} className="text-blue-600 hover:underline">
             Log in
           </Link>
         </p>
