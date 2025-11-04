@@ -188,7 +188,7 @@ export default function Index({ products = { data: [], links: [] }, suppliers = 
                 </div>
 
                 {/* Conditional Pagination & Summary */}
-                {filtered.length > 0 && products.links.length > 3 && (
+                {filtered.length > 0  && (
                     <div className="flex flex-col sm:flex-row justify-between items-center mt-6 text-sm text-gray-600 gap-3">
                         <p>
                             Showing {products.from} to {products.to} of {products.total} results

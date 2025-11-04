@@ -30,21 +30,24 @@ Route::middleware(['auth', 'admin.only'])->group(function () {
     Route::get('/suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
     Route::post('/suppliers', [SupplierController::class, 'store'])->name('suppliers.store');
     Route::get('/suppliers/{supplier}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+    Route::get('/suppliers/trash', [SupplierController::class, 'trash'])->name('suppliers.trash');
     Route::put('/suppliers/{supplier}', [SupplierController::class, 'update'])->name('suppliers.update');
     Route::delete('/suppliers/{supplier}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
+    Route::post('/suppliers/{id}/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
+    Route::delete('/suppliers/{id}/force-delete', [SupplierController::class, 'forceDelete'])->name('suppliers.forceDelete');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-       Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-        Route::get('products/trash', [ProductController::class, 'trash'])->name('products.trash');
+    Route::get('products/trash', [ProductController::class, 'trash'])->name('products.trash');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::post('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
-Route::delete('products/{id}/force', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
+    Route::delete('products/{id}/force', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
 });
 
 
@@ -53,4 +56,4 @@ Route::delete('products/{id}/force', [ProductController::class, 'forceDelete'])-
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -90,4 +90,31 @@ class SupplierController extends Controller
 
         return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully.');
     }
+
+
+
+     // View trashed suppliers
+    public function trash()
+    {
+        $suppliers = Supplier::onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(6);
+        return Inertia::render('Suppliers/Trash', compact('suppliers'));
+    }
+
+    // Restore supplier
+    public function restore($id)
+    {
+        $supplier = Supplier::onlyTrashed()->findOrFail($id);
+        $supplier->restore();
+
+        return redirect()->route('suppliers.trash')->with('success', 'Supplier restored successfully.');
+    }
+
+    // Permanently delete supplier
+    public function forceDelete($id)
+    {
+        $supplier = Supplier::onlyTrashed()->findOrFail($id);
+        $supplier->forceDelete();
+
+        return redirect()->route('suppliers.trash')->with('success', 'Supplier permanently deleted.');
+    }
 }

@@ -1,6 +1,6 @@
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, useForm, router } from "@inertiajs/react";
-import { Plus, Pencil, Trash2, X } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Trash } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
@@ -70,6 +70,7 @@ export default function Index({ suppliers }: { suppliers: PaginatedSuppliers }) 
                             Manage your suppliers and their contact details.
                         </p>
                     </div>
+                    <div className="flex flex-col sm:flex-row gap-3">
 
                     <motion.a
                         href={route("suppliers.create")}
@@ -80,6 +81,16 @@ export default function Index({ suppliers }: { suppliers: PaginatedSuppliers }) 
                         <Plus className="w-5 h-5" />
                         <span>Add New Supplier</span>
                     </motion.a>
+                    <motion.a
+                            href={route("suppliers.trash")}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center space-x-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition shadow-sm"
+                        >
+                            <Trash className="w-5 h-5" />
+                            <span>View Trash</span>
+                        </motion.a>
+                </div>
                 </div>
 
                 {/* Search */}
