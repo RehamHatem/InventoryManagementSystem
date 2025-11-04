@@ -28,12 +28,23 @@ class SupplierController extends Controller
     // Store new supplier
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required|string|min:2|max:50',
+                'email' => 'required|email|max:255|unique:suppliers,email',
+                'phone' => 'required|string|size:11|regex:/^[0-9+\-\s()]*$/',
+                'address' => 'required|string|max:255',
+            ],
+            [
+                'name.required' => 'The supplier name is required.',
+                'email.required' => 'The email address is required.',
+                'email.email' => 'Please provide a valid email address.',
+                'email.unique' => 'This email is already used by another supplier.',
+                'phone.required' => 'The phone number is required.',
+                'phone.regex' => 'The phone number format is invalid.',
+                'address.required' => 'The address field is required.',
+            ]
+        );
 
         Supplier::create($data);
 
@@ -49,12 +60,23 @@ class SupplierController extends Controller
     // Update supplier
     public function update(Request $request, Supplier $supplier)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required|string|min:2|max:50',
+                'email' => 'required|email|max:255|unique:suppliers,email,' . $supplier->id,
+                'phone' => 'required|string|max:20|regex:/^[0-9+\-\s()]*$/',
+                'address' => 'required|string|max:255',
+            ],
+            [
+                'name.required' => 'The supplier name is required.',
+                'email.required' => 'The email address is required.',
+                'email.email' => 'Please provide a valid email address.',
+                'email.unique' => 'This email is already used by another supplier.',
+                'phone.required' => 'The phone number is required.',
+                'phone.regex' => 'The phone number format is invalid.',
+                'address.required' => 'The address field is required.',
+            ]
+        );
 
         $supplier->update($data);
 
