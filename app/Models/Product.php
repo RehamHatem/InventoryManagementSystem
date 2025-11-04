@@ -17,6 +17,7 @@ class Product extends Model
     'price',       
     'quantity',    
     'supplier_id', 
+    'threshold',
 ];
 public function supplier() {
     return $this->belongsTo(Supplier::class);

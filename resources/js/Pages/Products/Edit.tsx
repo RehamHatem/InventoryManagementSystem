@@ -10,6 +10,7 @@ export default function Edit({ product, suppliers }: any) {
         sku: product.sku || "",
         cost: product.cost || "",
         price: product.price || "",
+        threshold: product.threshold || 2, 
         quantity: product.quantity || "",
         supplier_id: product.supplier_id || "",
         status: product.status ?? true,
@@ -110,7 +111,7 @@ export default function Edit({ product, suppliers }: any) {
                         </motion.div>
 
                         {/* SKU + Quantity */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-9">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-9">
                             <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     SKU
@@ -133,6 +134,7 @@ export default function Edit({ product, suppliers }: any) {
                                 <input
                                     type="number"
                                     value={data.quantity}
+                                     min="0"
                                     onChange={(e) => setData("quantity", e.target.value)}
                                     className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                 />
@@ -140,6 +142,24 @@ export default function Edit({ product, suppliers }: any) {
                                     <p className="text-red-600 text-sm mt-1">{errors.quantity}</p>
                                 )}
                             </motion.div>
+
+                            <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Threshold (Min Stock)
+                                </label>
+                                <input
+                                    type="number"
+                                    value={data.threshold}
+                                     min="0"
+                                    onChange={(e) => setData("threshold", e.target.value)}
+                                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                                {errors.threshold && (
+                                    <p className="text-red-600 text-sm mt-1">{errors.threshold}</p>
+                                )}
+                            </motion.div>
+
+
                         </div>
 
                         {/* Cost + Price */}

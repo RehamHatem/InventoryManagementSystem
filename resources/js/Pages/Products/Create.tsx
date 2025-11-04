@@ -12,6 +12,7 @@ export default function Create({ suppliers = [] }: any) {
         price: "",
         quantity: "",
         supplier_id: "",
+        threshold: 2,
         status: true,
     });
 
@@ -162,17 +163,23 @@ export default function Create({ suppliers = [] }: any) {
                             variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
                         >
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Category
-                                </label>
-                                <select
-                                    name="category"
-                                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                    disabled
-                                >
-                                    <option>Electronics</option>
-                                </select>
-                            </div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+        Reorder Threshold
+        <span className="text-gray-400 text-xs ml-1">(optional)</span>
+    </label>
+    <input
+        type="number"
+        name="threshold"
+        value={form.threshold}
+        onChange={handleChange}
+        min="0"
+        placeholder="Default is 2"
+        className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+    />
+    {errors.threshold && (
+        <p className="text-red-500 text-sm mt-1">{errors.threshold}</p>
+    )}
+</div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">

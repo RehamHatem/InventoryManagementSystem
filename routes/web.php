@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StockTransactionController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::post('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
     Route::delete('products/{id}/force', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
+
+
+
+    Route::get('/stock', [StockTransactionController::class, 'create'])
+        ->name('stock.create');
+    Route::post('/stock', [StockTransactionController::class, 'store'])
+        ->name('stock.store');
+    Route::get('/stock-transactions/create', [StockTransactionController::class, 'create'])
+        ->name('stock-transactions.create');
+
+    Route::post('/stock-transactions', [StockTransactionController::class, 'store'])
+        ->name('stock-transactions.store');
 });
 
 

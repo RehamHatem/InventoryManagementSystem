@@ -15,6 +15,7 @@ class StockTransaction extends Model
         'type',
         'quantity',
         'reason',
+        'notes',
     ];
 
     // belongs to a product and to a user

@@ -131,6 +131,7 @@ export default function Index({ products = { data: [], links: [] }, suppliers = 
                                 <th className="px-6 py-3 font-medium">Cost</th>
                                 <th className="px-6 py-3 font-medium">Price</th>
                                 <th className="px-6 py-3 font-medium">Quantity</th>
+                                <th className="px-6 py-3 font-medium">Min Stock</th>
                                 <th className="px-6 py-3 font-medium">Supplier</th>
                                 <th className="px-6 py-3 text-right font-medium">Actions</th>
                             </tr>
@@ -155,7 +156,19 @@ export default function Index({ products = { data: [], links: [] }, suppliers = 
                                             <td className="px-6 py-4 text-gray-600">{p.sku}</td>
                                             <td className="px-6 py-4 text-gray-600">EGP{p.cost}</td>
                                             <td className="px-6 py-4 text-gray-600">EGP{p.price}</td>
-                                            <td className="px-6 py-4 text-gray-600">{p.quantity}</td>
+                                            <td
+                                                className={`px-6 py-4 font-medium ${p.quantity < p.threshold
+                                                        ? "text-red-600"
+                                                        : p.quantity <= p.threshold * 1.2
+                                                            ? "text-yellow-500"
+                                                            : "text-green-600"
+                                                    }`}
+                                            >
+                                                {p.quantity}
+                                            </td>
+
+
+                                            <td className="px-6 py-4 text-gray-600">{p.threshold ?? "-"}</td>
                                             <td className="px-6 py-4 text-gray-600">{p.supplier?.name ?? "-"}</td>
                                             <td className="px-6 py-4">
                                                 <div className="flex justify-end items-center space-x-2">
@@ -188,7 +201,7 @@ export default function Index({ products = { data: [], links: [] }, suppliers = 
                 </div>
 
                 {/* Conditional Pagination & Summary */}
-                {filtered.length > 0  && (
+                {filtered.length > 0 && (
                     <div className="flex flex-col sm:flex-row justify-between items-center mt-6 text-sm text-gray-600 gap-3">
                         <p>
                             Showing {products.from} to {products.to} of {products.total} results
@@ -199,8 +212,8 @@ export default function Index({ products = { data: [], links: [] }, suppliers = 
                                     key={i}
                                     href={link.url ?? "#"}
                                     className={`px-3 py-1 rounded-md border text-sm ${link.active
-                                            ? "bg-blue-600 text-white border-blue-600"
-                                            : "bg-white hover:bg-gray-100 border-gray-300"
+                                        ? "bg-blue-600 text-white border-blue-600"
+                                        : "bg-white hover:bg-gray-100 border-gray-300"
                                         } ${!link.url ? "opacity-50 cursor-not-allowed" : ""}`}
                                     dangerouslySetInnerHTML={{ __html: link.label }}
                                 />

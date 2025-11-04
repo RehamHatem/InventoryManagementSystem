@@ -8,6 +8,7 @@ import {
     LogOut,
     User,
     Boxes,
+    ArrowLeftRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -50,6 +51,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                         {auth.user?.role === "admin" && (
                             <SidebarLink href="/suppliers" icon={<Users />} label="Suppliers" />
                         )}
+                        <SidebarLink href="/stock" icon={<ArrowLeftRight />} label="Stock Movements" />
                     </nav>
                 </div>
 

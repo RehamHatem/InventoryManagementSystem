@@ -43,7 +43,9 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'supplier_id' => 'required|exists:suppliers,id',
+            'threshold' => 'nullable|integer|min:0',
         ]);
+        $data['threshold'] = $data['threshold'] ?? 2;
 
         Product::create($data);
 
@@ -72,7 +74,9 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'supplier_id' => 'required|exists:suppliers,id',
+            'threshold' => 'nullable|integer|min:0',
         ]);
+        $data['threshold'] = $data['threshold'] ?? 2;
 
         $product->update($data);
 
