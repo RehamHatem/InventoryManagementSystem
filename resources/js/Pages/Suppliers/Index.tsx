@@ -1,19 +1,36 @@
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, router } from "@inertiajs/react";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Index({ suppliers }: { suppliers: any[] }) {
+interface Supplier {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+}
+
+interface PaginatedSuppliers {
+    data: Supplier[];
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+}
+
+export default function Index({ suppliers }: { suppliers: PaginatedSuppliers }) {
     const [search, setSearch] = useState("");
     const { delete: destroy } = useForm({});
-    const [selectedSupplier, setSelectedSupplier] = useState<any>(null);
+    const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
 
-    const filtered = suppliers.filter(
+    const filtered = suppliers.data.filter(
         (s) =>
             s.name.toLowerCase().includes(search.toLowerCase()) ||
-            (s.contact_person ?? "").toLowerCase().includes(search.toLowerCase())
+            s.email.toLowerCase().includes(search.toLowerCase())
     );
 
     const handleConfirmDelete = () => {
@@ -34,7 +51,6 @@ export default function Index({ suppliers }: { suppliers: any[] }) {
         <DashboardLayout>
             <Head title="Suppliers" />
 
-            {/* Page Animation */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -62,29 +78,21 @@ export default function Index({ suppliers }: { suppliers: any[] }) {
                     </motion.a>
                 </div>
 
-                {/* Search Bar */}
+                {/* Search */}
                 <motion.input
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
                     type="text"
-                    placeholder="Search by name or contact..."
+                    placeholder="Search by name or email..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full mb-6 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
 
                 {/* Table */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="overflow-x-auto"
-                >
+                <motion.div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="bg-gray-100 text-left text-gray-700">
-                                <th className="px-4 py-3 border-b">Supplier Name</th>
+                                <th className="px-4 py-3 border-b">Name</th>
                                 <th className="px-4 py-3 border-b">Email</th>
                                 <th className="px-4 py-3 border-b">Phone</th>
                                 <th className="px-4 py-3 border-b">Address</th>
@@ -105,31 +113,21 @@ export default function Index({ suppliers }: { suppliers: any[] }) {
                                         <td className="px-4 py-3 border-b font-medium text-gray-800">
                                             {s.name}
                                         </td>
-                                        <td className="px-4 py-3 border-b text-gray-600">
-                                            {s.email}
-                                        </td>
-                                        <td className="px-4 py-3 border-b text-gray-600">
-                                            {s.phone}
-                                        </td>
-                                        <td className="px-4 py-3 border-b text-gray-600">
-                                            {s.address || "-"}
-                                        </td>
+                                        <td className="px-4 py-3 border-b text-gray-600">{s.email}</td>
+                                        <td className="px-4 py-3 border-b text-gray-600">{s.phone}</td>
+                                        <td className="px-4 py-3 border-b text-gray-600">{s.address}</td>
                                         <td className="px-4 py-3 border-b text-right flex justify-end space-x-2">
-                                            {/* Edit Button */}
                                             <motion.a
                                                 href={route("suppliers.edit", s.id)}
                                                 whileHover={{ scale: 1.1 }}
                                                 className="p-2 rounded-md text-blue-600 hover:bg-blue-50 transition"
-                                                title="Edit"
                                             >
                                                 <Pencil className="w-5 h-5" />
                                             </motion.a>
 
-                                            {/* Delete Button */}
                                             <motion.button
                                                 whileHover={{ scale: 1.1 }}
                                                 onClick={() => setSelectedSupplier(s)}
-                                                title="Delete"
                                                 className="p-2 rounded-md text-red-600 hover:bg-red-50 transition"
                                             >
                                                 <Trash2 className="w-5 h-5" />
@@ -141,9 +139,26 @@ export default function Index({ suppliers }: { suppliers: any[] }) {
                         </tbody>
                     </table>
                 </motion.div>
+
+                {/* Pagination */}
+                <div className="flex justify-center mt-6 space-x-2">
+                    {suppliers.links.map((link, i) => (
+                        <button
+                            key={i}
+                            disabled={!link.url}
+                            onClick={() => link.url && router.visit(link.url)}
+                            className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+                                link.active
+                                    ? "bg-blue-600 text-white"
+                                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            } ${!link.url ? "opacity-50 cursor-not-allowed" : ""}`}
+                            dangerouslySetInnerHTML={{ __html: link.label }}
+                        />
+                    ))}
+                </div>
             </motion.div>
 
-            {/* Delete Confirmation Dialog */}
+            {/* Delete Confirmation Dialog (unchanged) */}
             <AnimatePresence>
                 {selectedSupplier && (
                     <motion.div

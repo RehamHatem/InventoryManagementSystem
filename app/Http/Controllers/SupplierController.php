@@ -15,7 +15,7 @@ class SupplierController extends Controller
     // List all suppliers
     public function index()
     {
-        $suppliers = Supplier::orderBy('name')->get();
+        $suppliers = Supplier::orderBy('name')->paginate(6);
         return Inertia::render('Suppliers/Index', compact('suppliers'));
     }
 
