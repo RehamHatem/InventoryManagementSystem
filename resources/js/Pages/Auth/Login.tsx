@@ -34,7 +34,7 @@ export default function Login({ status, canResetPassword ,auth}: { status?: stri
 
         {/* Icon */}
         <div className="flex justify-center mb-6">
-          <div className="w-14 h-14 rounded-lg bg-blue-100 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-lg flex items-center justify-center">
             <Boxes className="h-14 w-14 text-blue-600" />
           </div>
         </div>

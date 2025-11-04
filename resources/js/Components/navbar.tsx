@@ -17,7 +17,7 @@ export default function Navbar({ auth }: { auth: any }) {
     href="/"
     className="flex items-center space-x-3 hover:opacity-80 transition"
 >
-    <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+    <div className="w-10 h-10 rounded-lg flex items-center justify-center">
        <Boxes className="h-14 w-14 text-blue-600" />
     </div>
 
