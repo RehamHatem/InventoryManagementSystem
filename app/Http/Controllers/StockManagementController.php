@@ -49,7 +49,7 @@ class StockManagementController extends Controller
 
  public function allTransactions()
 {
-    $transactions = \App\Models\StockTransaction::with(['product:id,name', 'user:id,name'])
+    $transactions = \App\Models\StockTransaction::with(['product:id,name,cost,price', 'user:id,name'])
         ->latest()
         ->get();
 

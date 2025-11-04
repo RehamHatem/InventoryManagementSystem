@@ -18,7 +18,7 @@ import { Input } from "@headlessui/react";
 
 interface Transaction {
   id: number;
-  product: { name: string; cost?: number };
+  product: { name: string; cost?: number; price?: number };
   user: { name: string };
   type: string;
   quantity: number;
@@ -34,6 +34,7 @@ export default function AllTransactions() {
   const { transactions } = usePage<PageProps>().props;
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState<"all" | "in" | "out">("all");
+// console.log("transactions:", transactions);
 
   // === Totals ===
   const totalInbound = transactions
@@ -50,6 +51,7 @@ export default function AllTransactions() {
   }, 0);
 
   const netChange = totalInbound - totalOutbound;
+  
 
   const filteredTransactions = transactions.filter((t) => {
     const matchesSearch =
@@ -238,61 +240,98 @@ export default function AllTransactions() {
             <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
               <table className="min-w-full text-sm text-left border-collapse">
                 <thead className="bg-gray-100 text-gray-600 uppercase text-xs tracking-wide">
-                  <tr>
-                    <th className="py-3 px-4 whitespace-nowrap">Item</th>
-                    <th className="py-3 px-4 whitespace-nowrap">Type</th>
-                    <th className="py-3 px-4 whitespace-nowrap">Qty</th>
-                    <th className="py-3 px-4 whitespace-nowrap">Reason</th>
-                    <th className="py-3 px-4 whitespace-nowrap">User</th>
-                    <th className="py-3 px-4 text-right whitespace-nowrap">
-                      Date
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredTransactions.map((t, index) => (
-                    <motion.tr
-                      key={t.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.03 }}
-                      className="border-b last:border-0 hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="py-3 px-4 font-medium text-gray-800 whitespace-nowrap">
-                        {t.product?.name}
-                      </td>
-                      <td className="py-3 px-4">
-                        <span
-                          className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
-                            t.type === "in"
-                              ? "bg-green-100 text-green-700"
-                              : "bg-red-100 text-red-700"
-                          }`}
-                        >
-                          {t.type === "in" ? (
-                            <ArrowDownRight size={12} />
-                          ) : (
-                            <ArrowUpRight size={12} />
-                          )}
-                          {t.type === "in" ? "Inbound" : "Outbound"}
-                        </span>
-                      </td>
-                      <td
-                        className={`py-3 px-4 font-semibold ${
-                          t.type === "in" ? "text-green-700" : "text-red-700"
-                        }`}
-                      >
-                        {t.type === "in" ? "+" : "-"}
-                        {t.quantity}
-                      </td>
-                      <td className="py-3 px-4 text-gray-600">{t.reason}</td>
-                      <td className="py-3 px-4 text-gray-600">{t.user?.name}</td>
-                      <td className="py-3 px-4 text-gray-500 text-right whitespace-nowrap">
-                        {new Date(t.created_at).toLocaleString()}
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
+  <tr>
+    <th className="py-3 px-4 whitespace-nowrap">Item</th>
+    <th className="py-3 px-4 whitespace-nowrap">Type</th>
+    <th className="py-3 px-4 whitespace-nowrap">Qty</th>
+    <th className="py-3 px-4 whitespace-nowrap">Unit Value (EGP)</th>
+    <th className="py-3 px-4 whitespace-nowrap">Transaction Total (EGP)</th>
+    <th className="py-3 px-4 whitespace-nowrap">Reason</th>
+    <th className="py-3 px-4 whitespace-nowrap">User</th>
+    <th className="py-3 px-4 text-right whitespace-nowrap">Date</th>
+  </tr>
+</thead>
+<tbody>
+  {filteredTransactions.map((t, index) => {
+    // Determine unit value and total value based on type
+    const unitValue =
+  t.type === "in"
+    ? Number(t.product?.cost ?? 0)
+    : Number(t.product?.price ?? t.product?.cost ?? 0);
+
+
+    const totalValue = unitValue * t.quantity;
+
+    return (
+      <motion.tr
+        key={t.id}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.03 }}
+        className="border-b last:border-0 hover:bg-gray-50 transition-colors"
+      >
+        <td className="py-3 px-4 font-medium text-gray-800 whitespace-nowrap">
+          {t.product?.name}
+        </td>
+
+        {/* Type */}
+        <td className="py-3 px-4">
+          <span
+            className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+              t.type === "in"
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {t.type === "in" ? (
+              <ArrowDownRight size={12} />
+            ) : (
+              <ArrowUpRight size={12} />
+            )}
+            {t.type === "in" ? "Inbound" : "Outbound"}
+          </span>
+        </td>
+
+        {/* Quantity */}
+        <td
+          className={`py-3 px-4 font-semibold ${
+            t.type === "in" ? "text-green-700" : "text-red-700"
+          }`}
+        >
+          {t.type === "in" ? "+" : "-"}
+          {t.quantity}
+        </td>
+
+        {/* Unit Value */}
+        <td className="py-3 px-4 text-gray-700">
+          {unitValue.toLocaleString("en-EG", {
+            style: "currency",
+            currency: "EGP",
+          })}
+        </td>
+
+        {/* Transaction Total */}
+        <td
+          className={`py-3 px-4 font-medium ${
+            t.type === "in" ? "text-green-700" : "text-red-700"
+          }`}
+        >
+          {totalValue.toLocaleString("en-EG", {
+            style: "currency",
+            currency: "EGP",
+          })}
+        </td>
+
+        <td className="py-3 px-4 text-gray-600">{t.reason}</td>
+        <td className="py-3 px-4 text-gray-600">{t.user?.name}</td>
+        <td className="py-3 px-4 text-gray-500 text-right whitespace-nowrap">
+          {new Date(t.created_at).toLocaleString()}
+        </td>
+      </motion.tr>
+    );
+  })}
+</tbody>
+
               </table>
             </div>
           ) : (
