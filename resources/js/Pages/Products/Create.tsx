@@ -109,9 +109,8 @@ export default function Create({ suppliers = [] }: any) {
                                 onChange={handleChange}
                                 placeholder="e.g., Wireless Ergonomic Mouse"
                                 required
-                                className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
-                                    errors.name ? "border-red-500" : ""
-                                }`}
+                                className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${errors.name ? "border-red-500" : ""
+                                    }`}
                             />
                             {errors.name && (
                                 <p className="text-red-500 text-sm mt-1">{errors.name}</p>
@@ -133,9 +132,8 @@ export default function Create({ suppliers = [] }: any) {
                                     value={form.sku}
                                     onChange={handleChange}
                                     required
-                                    className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
-                                        errors.sku ? "border-red-500" : ""
-                                    }`}
+                                    className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${errors.sku ? "border-red-500" : ""
+                                        }`}
                                 />
                                 {errors.sku && (
                                     <p className="text-red-500 text-sm mt-1">{errors.sku}</p>
@@ -149,6 +147,7 @@ export default function Create({ suppliers = [] }: any) {
                                 <input
                                     type="number"
                                     name="quantity"
+                                    min={0}
                                     value={form.quantity}
                                     onChange={handleChange}
                                     required
@@ -157,29 +156,29 @@ export default function Create({ suppliers = [] }: any) {
                             </div>
                         </motion.div>
 
-                        {/* Category + Supplier */}
+                        {/* min stock + Supplier */}
                         <motion.div
                             className="grid grid-cols-1 md:grid-cols-2 gap-6"
                             variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
                         >
                             <div>
-    <label className="block text-sm font-medium text-gray-700 mb-1">
-        Reorder Threshold
-        <span className="text-gray-400 text-xs ml-1">(optional)</span>
-    </label>
-    <input
-        type="number"
-        name="threshold"
-        value={form.threshold}
-        onChange={handleChange}
-        min="0"
-        placeholder="Default is 2"
-        className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-    />
-    {errors.threshold && (
-        <p className="text-red-500 text-sm mt-1">{errors.threshold}</p>
-    )}
-</div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Reorder Threshold - min stock
+                                    <span className="text-gray-400 text-xs ml-1">(optional)</span>
+                                </label>
+                                <input
+                                    type="number"
+                                    name="threshold"
+                                    value={form.threshold}
+                                    onChange={handleChange}
+                                    min="0"
+                                    placeholder="Default is 2"
+                                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                                {errors.threshold && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.threshold}</p>
+                                )}
+                            </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -190,9 +189,8 @@ export default function Create({ suppliers = [] }: any) {
                                     value={form.supplier_id}
                                     onChange={handleChange}
                                     required
-                                    className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
-                                        errors.supplier_id ? "border-red-500" : ""
-                                    }`}
+                                    className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${errors.supplier_id ? "border-red-500" : ""
+                                        }`}
                                 >
                                     <option value="">Select a supplier</option>
                                     {suppliers.map((s: any) => (
@@ -219,6 +217,7 @@ export default function Create({ suppliers = [] }: any) {
                                 <input
                                     type="number"
                                     name="cost"
+                                    min={0}
                                     value={form.cost}
                                     onChange={handleChange}
                                     required
@@ -233,6 +232,7 @@ export default function Create({ suppliers = [] }: any) {
                                 <input
                                     type="number"
                                     name="price"
+                                    min={0}
                                     value={form.price}
                                     onChange={handleChange}
                                     required

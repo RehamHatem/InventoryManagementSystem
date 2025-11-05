@@ -1,5 +1,5 @@
 import Navbar from "@/Components/navbar";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import {
     Boxes,
@@ -8,8 +8,17 @@ import {
     ClipboardList,
     BarChart3,
 } from "lucide-react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 export default function Welcome({ auth }: { auth: any }) {
+    const { flash }: any = usePage().props;
+
+    useEffect(() => {
+        if (flash?.success) toast.success(flash.success);
+        if (flash?.error) toast.error(flash.error);
+        if (flash?.info) toast(flash.info);
+    }, [flash]);
     return (
         <>
             <Head title="Welcome" />

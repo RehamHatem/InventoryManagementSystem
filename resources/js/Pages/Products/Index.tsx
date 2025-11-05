@@ -10,7 +10,7 @@ export default function Index({ products = { data: [], links: [] }, suppliers = 
     const [selectedSupplier, setSelectedSupplier] = useState("");
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
-    console.log("Suppliers:", suppliers);
+    // console.log("Suppliers:", suppliers);
 
 
     const filtered = (products.data || []).filter((p: any) => {
