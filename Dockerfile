@@ -28,5 +28,14 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Expose Apache port
 EXPOSE 8080
 
-# Start Apache server
+# Set Apache DocumentRoot to Laravel's public folder
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+# Update Apache config to point to Laravel's public directory
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/sites-available/000-default.conf \
+    /etc/apache2/apache2.conf \
+    /etc/apache2/conf-available/*.conf
+
+# Start Apache (production-ready)
 CMD ["apache2-foreground"]
