@@ -4,7 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        {{-- <title inertia>{{ config('app.name', 'Laravel') }}</title> --}}
+        <title>Inventory Manager - Manage your warehouse efficiently</title>
+        <meta name="application-name" content="Inventory Manager">
+
+        <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+        <link rel="alternate icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" href="/favicon.ico">
+        <meta name="theme-color" content="#2563eb">
+
+        
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
