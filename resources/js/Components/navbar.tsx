@@ -3,7 +3,7 @@ import { Boxes } from "lucide-react";
 
 export default function Navbar({ auth }: { auth: any }) {
     const page = usePage();
-    const currentRoute = page.url; 
+    const currentRoute = page.url;
 
     const onLoginPage = currentRoute.startsWith("/login");
     const onRegisterPage = currentRoute.startsWith("/register");
@@ -14,30 +14,40 @@ export default function Navbar({ auth }: { auth: any }) {
 
                 {/* Logo */}
                 <Link
-    href="/"
-    className="flex items-center space-x-3 hover:opacity-80 transition"
->
-    <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-       <Boxes className="h-14 w-14 text-blue-600" />
-    </div>
+                    href="/"
+                    className="flex items-center space-x-3 hover:opacity-80 transition"
+                >
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+                        <Boxes className="h-14 w-14 text-blue-600" />
+                    </div>
 
-    <span className="text-xl font-semibold text-gray-800">
-        Inventory Manager
-    </span>
-</Link>
+                    <span className="text-xl font-semibold text-gray-800">
+                        Inventory Manager
+                    </span>
+                </Link>
 
 
                 {/* Right Navigation */}
                 <nav className="flex items-center space-x-6 text-gray-700 font-medium">
 
                     {/* If user is logged in — show Dashboard */}
-                    {auth?.user?.role === 'admin' ? (
+                    {auth.user && auth?.user?.role === 'admin' ? (
                         <Link href={route("dashboard")} className="hover:text-blue-600">
                             Dashboard
                         </Link>
-                    ) : auth?.user?.role === 'manager' ? (
+                    ) : auth.user && auth?.user?.role === 'manager' ? (
                         <Link href={route("stockmanagement.index")} className="hover:text-blue-600">
                             Warehouse
+                        </Link>
+
+
+                    ) : auth.user ? (
+                        <Link
+                            href={route("logout")}
+                            method="post"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 shadow transition"
+                        >
+                            Log Out
                         </Link>
                     ) : (
                         <>
