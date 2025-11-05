@@ -37,18 +37,31 @@ export default function Index({ suppliers }: { suppliers: PaginatedSuppliers }) 
     );
 
     const handleConfirmDelete = () => {
-        if (!selectedSupplier) return;
-        destroy(route("suppliers.destroy", selectedSupplier.id), {
-            onSuccess: () => {
+    if (!selectedSupplier) return;
+
+    destroy(route("suppliers.destroy", selectedSupplier.id), {
+        preserveScroll: true,
+        onSuccess: (page: any) => {
+            const flash = (page?.props as any)?.flash || {};
+
+            if (flash.error) {
+                toast.error(flash.error);
+            } else if (flash.success) {
+                toast.success(flash.success);
+            } else {
                 toast.success("Supplier deleted successfully!");
-                setSelectedSupplier(null);
-            },
-            onError: () => {
-                toast.error("Failed to delete supplier.");
-                setSelectedSupplier(null);
-            },
-        });
-    };
+            }
+
+            setSelectedSupplier(null);
+        },
+        onError: () => {
+            toast.error("An unexpected error occurred.");
+            setSelectedSupplier(null);
+        },
+    });
+};
+
+
 
     return (
         <DashboardLayout>

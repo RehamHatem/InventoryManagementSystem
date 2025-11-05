@@ -86,6 +86,12 @@ class SupplierController extends Controller
     // Delete supplier
     public function destroy(Supplier $supplier)
     {
+
+        if ($supplier->products()->exists()) {
+        return redirect()
+            ->route('suppliers.index')
+            ->with('error', 'Cannot delete supplier because it is assigned to one or more products.');
+    }
         $supplier->delete();
 
         return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully.');
