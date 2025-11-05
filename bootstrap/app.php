@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AccessControle;
 use App\Http\Middleware\adminOnly;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin.only'   => adminOnly::class,
+        ]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'not.user'   => AccessControle::class,
         ]);
     })
     ->withMiddleware(function (Middleware $middleware): void {
