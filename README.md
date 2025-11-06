@@ -1,59 +1,220 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🧾 Inventory Manager
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+An **Inventory Management System** built with **Laravel**, **Inertia.js**, and **React**.  
+It helps users manage suppliers, products, categories, and stock levels — all in one sleek and modern dashboard.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 🔐 Authentication with Laravel Breeze / Sanctum  
+- 📦 Manage Products, Categories, and Suppliers  
+- 📊 Dashboard with statistics and charts  
+- ⚙️ Backend: Laravel 11 + MySQL  
+- 🎨 Frontend: React + Inertia.js + TailwindCSS  
+- 🐳 Docker support for easy setup  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Requirements
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Ensure the following are installed on your system:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP ≥ 8.2  
+- Composer ≥ 2.x  
+- Node.js ≥ 18 (Recommended ≥ 20.19)  
+- NPM or Yarn  
+- MySQL or Docker  
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## ⚙️ Local Setup (Without Docker)
 
-### Premium Partners
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/yourusername/inventory-manager.git
+cd inventory-manager
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2️⃣ Install PHP Dependencies
+```bash
+composer install
+```
 
-## Contributing
+### 3️⃣ Install Node Dependencies
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4️⃣ Create Environment File
+```bash
+cp .env.example .env
+```
 
-## Code of Conduct
+### 5️⃣ Generate Application Key
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 6️⃣ Configure Database
+Edit your `.env` file:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventory
+DB_USERNAME=root
+DB_PASSWORD=root
+```
 
-## Security Vulnerabilities
+### 7️⃣ Run Database Migrations and Seeders
+```bash
+php artisan migrate --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 8️⃣ Run Development Servers
+Run Laravel backend:
+```bash
+php artisan serve
+```
 
-## License
+Then, in a separate terminal, run React/Vite frontend:
+```bash
+npm run dev
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+✅ Visit: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 🐳 Run with Docker (Optional)
+
+If you prefer using Docker for an isolated environment:
+
+### 1️⃣ Build and Start Containers
+```bash
+docker-compose up --build -d
+```
+
+### 2️⃣ Access the App Container
+```bash
+docker exec -it laravel_app bash
+```
+
+### 3️⃣ Inside the Container, Install Dependencies
+```bash
+composer install
+npm install
+npm run build
+php artisan migrate --seed
+php artisan key:generate
+exit
+```
+
+✅ Visit your app at: [http://localhost:8080](http://localhost:8080)
+
+---
+
+## 🧩 Common Commands
+
+| Command | Description |
+|----------|-------------|
+| `composer install` | Install PHP dependencies |
+| `npm install` | Install frontend dependencies |
+| `npm run dev` | Run React + Vite in dev mode |
+| `npm run build` | Build production-ready assets |
+| `php artisan serve` | Start Laravel backend server |
+| `php artisan migrate --seed` | Run database migrations with seed data |
+| `php artisan optimize:clear` | Clear Laravel cache and config |
+| `docker-compose up -d` | Start Docker containers |
+| `docker-compose down` | Stop all running containers |
+
+---
+
+## 📁 Project Structure
+
+```
+inventory-manager/
+├── app/                     # Laravel backend logic
+├── database/                # Migrations & seeders
+├── public/                  # Public assets
+├── resources/js/            # React (Inertia) frontend
+├── routes/                  # Web routes
+├── docker-compose.yml       # Docker config
+├── Dockerfile               # App container setup
+├── package.json             # JS dependencies
+├── composer.json            # PHP dependencies
+└── README.md
+```
+
+---
+
+## 🧑‍💻 Quick Start Commands Summary
+
+```bash
+# Clone repo
+git clone https://github.com/yourusername/inventory-manager.git
+cd inventory-manager
+
+# Install dependencies
+composer install
+npm install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Configure database (edit .env file)
+php artisan migrate --seed
+
+# Run development servers
+php artisan serve
+npm run dev
+```
+
+---
+
+## 🐞 Troubleshooting
+
+### ❌ Vite Connection Refused
+If you see errors like:
+```
+GET http://[::1]:5173/... net::ERR_CONNECTION_REFUSED
+```
+➡ It means Vite isn’t running. Run:
+```bash
+npm run dev
+```
+
+### ❌ MySQL Connection Fails (in Docker)
+Update `.env`:
+```env
+DB_HOST=db
+```
+
+### ❌ Node Version Warning
+If you see:
+```
+Vite requires Node.js version 20.19+ or 22.12+
+```
+➡ Update Node.js using:
+```bash
+nvm install 20.19
+nvm use 20.19
+```
+
+---
+
+## 🧑‍🤝‍🧑 Contributors
+
+- **Reham Hatem** — Full Stack Developer  
+
+Open to contributions — feel free to submit a PR or raise an issue.
+
+---
+
+
+## 💡 Summary
+
+**Inventory Manager** is a full-stack Laravel + React + Inertia.js application for efficiently managing inventory, suppliers, and stock in real-time.  
+Built for performance, scalability, and ease of development. 🚀

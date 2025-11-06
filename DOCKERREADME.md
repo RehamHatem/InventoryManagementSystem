@@ -15,6 +15,7 @@ Before getting started, please ensure the following:
 2. **Start Docker Desktop**
 
    Make sure Docker Desktop is running before moving forward.
+   Make sure port 8080 (for the Laravel app) and 3307 (for MySQL) are free.
 
 
 ##  Steps to Run the Application
@@ -27,4 +28,24 @@ Before getting started, please ensure the following:
 
    docker compose up -d
 
+   Wait until containers are up and running, then visit:
+   🔗 http://localhost:8080
+
 Note: The docker-compose.yml file must be present in the same directory where this command is executed.
+
+##  Common Commands
+
+1. Start Containers -> docker compose up -d
+
+2. Stop Containers -> docker compose down
+
+3. Rebuild Containers (after code or dependency changes) -> docker compose build --no-cache -> then -> docker compose up -d
+
+4. View Logs -> docker compose logs -f
+
+
+
+
+
+   
+
