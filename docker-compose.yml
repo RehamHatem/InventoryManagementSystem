@@ -27,6 +27,7 @@ services:
       fi &&
       echo 'Running migrations...' &&
       php artisan migrate --force &&
+      php artisan db:seed --force &&
       echo 'Starting Apache...' &&
       apache2-foreground
       "

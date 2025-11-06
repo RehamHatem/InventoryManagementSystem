@@ -22,6 +22,8 @@ RUN if [ ! -f ".env" ]; then cp .env.example .env; fi
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
+RUN composer require fakerphp/faker --dev
+
 
 # Install frontend dependencies + build assets
 RUN npm install && npm run build

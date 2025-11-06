@@ -13,9 +13,10 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         //
-        \App\Models\User::factory()->create([
-            'name' => 'Admin User',
+        \App\Models\User::updateOrCreate([
             'email' => 'admin@inventory.com',
+        ], [
+            'name' => 'Admin User',
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);

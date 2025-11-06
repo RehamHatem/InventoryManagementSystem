@@ -13,9 +13,10 @@ class ManagerUserSeeder extends Seeder
     public function run(): void
     {
         //
-        \App\Models\User::factory()->create([
-            'name' => 'Warehouse Manager',
+        \App\Models\User::updateOrCreate([
             'email' => 'manager@inventory.com',
+        ], [
+            'name' => 'Warehouse Manager',
             'password' => bcrypt('password'),
             'role' => 'manager',
         ]);
